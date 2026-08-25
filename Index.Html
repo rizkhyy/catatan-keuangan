@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Catatan Keuangan</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header class="topbar">
+
+            <div>
+                <h1> Catatan Keuangan</h1>
+                <p>Kelola keuanganmu dengan mudah</p>
+            </div>
+
+            <div class="top-buttons">
+
+                <button id="darkMode">
+                    🌙
+                </button>
+
+                <button id="logout" class="logout-btn">
+                    Logout
+                </button>
+
+            </div>
+
+        </header>
+
+
+        <!-- SUMMARY -->
+
+        <section class="summary">
+
+            <div class="card balance">
+                <span>Saldo</span>
+                <h2 id="saldo">Rp0</h2>
+            </div>
+
+            <div class="card income">
+                <span>Pemasukan</span>
+                <h2 id="pemasukan">Rp0</h2>
+            </div>
+
+            <div class="card expense">
+                <span>Pengeluaran</span>
+                <h2 id="pengeluaran">Rp0</h2>
+            </div>
+
+        </section>
+
+
+        <!-- FORM -->
+
+        <section class="form-section">
+
+            <h2>Tambah Transaksi</h2>
+
+            <form id="formTransaksi">
+
+                <input
+                    type="text"
+                    id="deskripsi"
+                    placeholder="Contoh: Beli makanan"
+                    required
+                >
+
+                <input
+                    type="number"
+                    id="jumlah"
+                    placeholder="Jumlah"
+                    min="1"
+                    required
+                >
+
+                <select id="tipe">
+
+                    <option value="income">
+                        Pemasukan
+                    </option>
+
+                    <option value="expense">
+                        Pengeluaran
+                    </option>
+
+                </select>
+
+
+                <select id="kategori">
+
+                    <option value="Makanan">
+                        🍔 Makanan
+                    </option>
+
+                    <option value="Transportasi">
+                        🚗 Transportasi
+                    </option>
+
+                    <option value="Sekolah">
+                        📚 Sekolah
+                    </option>
+
+                    <option value="Game">
+                        🎮 Game
+                    </option>
+
+                    <option value="Belanja">
+                        🛒 Belanja
+                    </option>
+
+                    <option value="Hiburan">
+                        🎬 Hiburan
+                    </option>
+
+                    <option value="Gaji">
+                        💼 Gaji
+                    </option>
+
+                    <option value="Lainnya">
+                        📦 Lainnya
+                    </option>
+
+                </select>
+
+
+                <button type="submit">
+                    + Tambah
+                </button>
+
+            </form>
+
+        </section>
+
+
+        <!-- GRAFIK -->
+
+        <section class="chart-section">
+
+            <h2>📊 Grafik Pengeluaran</h2>
+
+            <div class="chart-container">
+
+                <canvas id="expenseChart"></canvas>
+
+            </div>
+
+        </section>
+
+
+        <!-- FILTER -->
+
+        <section class="transactions">
+
+            <div class="transaction-header">
+
+                <h2>Riwayat Transaksi</h2>
+
+                <div class="filters">
+
+                    <select id="filterBulan">
+
+                        <option value="all">
+                            Semua Bulan
+                        </option>
+
+                        <option value="0">Januari</option>
+                        <option value="1">Februari</option>
+                        <option value="2">Maret</option>
+                        <option value="3">April</option>
+                        <option value="4">Mei</option>
+                        <option value="5">Juni</option>
+                        <option value="6">Juli</option>
+                        <option value="7">Agustus</option>
+                        <option value="8">September</option>
+                        <option value="9">Oktober</option>
+                        <option value="10">November</option>
+                        <option value="11">Desember</option>
+
+                    </select>
+
+
+                    <select id="filterKategori">
+
+                        <option value="all">
+                            Semua Kategori
+                        </option>
+
+                        <option value="Makanan">
+                            Makanan
+                        </option>
+
+                        <option value="Transportasi">
+                            Transportasi
+                        </option>
+
+                        <option value="Sekolah">
+                            Sekolah
+                        </option>
+
+                        <option value="Game">
+                            Game
+                        </option>
+
+                        <option value="Belanja">
+                            Belanja
+                        </option>
+
+                        <option value="Hiburan">
+                            Hiburan
+                        </option>
+
+                        <option value="Gaji">
+                            Gaji
+                        </option>
+
+                        <option value="Lainnya">
+                            Lainnya
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <div id="daftarTransaksi">
+
+                <p class="empty">
+                    Belum ada transaksi.
+                </p>
+
+            </div>
+
+
+            <button id="hapusSemua" class="delete-all">
+                🗑️ Hapus Semua
+            </button>
+
+        </section>
+
+    </div>
+
+
+    <script src="script.js"></script>
+
+</body>
+
+</html>
