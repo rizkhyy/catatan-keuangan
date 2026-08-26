@@ -1,153 +1,675 @@
-/* =====================================================
-   GLOBAL
-===================================================== */
+/* =========================================
+   RESET
+========================================= */
 
 * {
     box-sizing: border-box;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    color: #17324d;
+    font-family: "Segoe UI", Arial, sans-serif;
+    min-height: 100vh;
+    color: #e8f4ff;
 
     background:
-        radial-gradient(
-            circle at 10% 10%,
-            rgba(45, 150, 230, 0.18),
-            transparent 25%
-        ),
-        radial-gradient(
-            circle at 90% 90%,
-            rgba(30, 120, 210, 0.18),
-            transparent 30%
-        ),
-        linear-gradient(
-            135deg,
-            #061a2e,
-            #0b3154,
-            #124b73
-        );
+        radial-gradient(circle at 15% 15%, rgba(0, 153, 255, .20), transparent 25%),
+        radial-gradient(circle at 85% 20%, rgba(0, 100, 220, .15), transparent 25%),
+        radial-gradient(circle at 70% 90%, rgba(0, 180, 255, .12), transparent 25%),
+        linear-gradient(135deg, #031321, #062943 45%, #073e61);
 
-    min-height: 100vh;
+    position: relative;
 }
 
 
-/* =====================================================
+/* =========================================
+   BACKGROUND DECORATION
+========================================= */
+
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+
+    background-size: 45px 45px;
+
+    pointer-events: none;
+}
+
+body::after {
+    content: "";
+    position: fixed;
+
+    width: 400px;
+    height: 400px;
+
+    right: -180px;
+    bottom: -180px;
+
+    border-radius: 50%;
+
+    background: rgba(0, 157, 255, .12);
+
+    filter: blur(10px);
+
+    pointer-events: none;
+}
+
+
+/* =========================================
+   DASHBOARD CONTAINER
+========================================= */
+
+.container {
+    width: min(1180px, calc(100% - 40px));
+    margin: 0 auto;
+    padding: 35px 0 50px;
+
+    position: relative;
+    z-index: 1;
+}
+
+
+/* =========================================
+   TOPBAR
+========================================= */
+
+.topbar {
+    position: relative;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 28px 32px;
+    margin-bottom: 25px;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 24px;
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.25),
+        inset 0 1px rgba(255,255,255,.08);
+
+    overflow: hidden;
+}
+
+.topbar::before {
+    content: "";
+
+    position: absolute;
+
+    width: 220px;
+    height: 220px;
+
+    right: -100px;
+    top: -130px;
+
+    border-radius: 50%;
+
+    background: rgba(33,150,243,.18);
+}
+
+.topbar h1 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 32px;
+    letter-spacing: -.7px;
+}
+
+.topbar p {
+    margin: 7px 0 0;
+
+    color: #9fc1d9;
+
+    font-size: 14px;
+}
+
+.top-buttons {
+    display: flex;
+    gap: 10px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.top-buttons button {
+    border: 1px solid rgba(255,255,255,.12);
+
+    padding: 11px 16px;
+
+    border-radius: 12px;
+
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+#darkMode {
+    background: rgba(255,255,255,.10);
+    color: white;
+
+    font-size: 17px;
+}
+
+#darkMode:hover {
+    background: rgba(255,255,255,.18);
+    transform: translateY(-2px);
+}
+
+.logout-btn {
+    background: #ef5350;
+    color: white;
+}
+
+.logout-btn:hover {
+    background: #ff6663;
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
+   SUMMARY
+========================================= */
+
+.summary {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.card {
+    position: relative;
+
+    padding: 25px 27px;
+
+    min-height: 145px;
+
+    border-radius: 22px;
+
+    overflow: hidden;
+
+    border: 1px solid rgba(255,255,255,.15);
+
+    box-shadow:
+        0 20px 40px rgba(0,0,0,.25);
+
+    transition: .3s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+
+    box-shadow:
+        0 25px 50px rgba(0,0,0,.35);
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    width: 150px;
+    height: 150px;
+
+    right: -45px;
+    top: -55px;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.12);
+}
+
+.card::after {
+    content: "";
+
+    position: absolute;
+
+    width: 80px;
+    height: 80px;
+
+    right: 30px;
+    bottom: -45px;
+
+    border-radius: 50%;
+
+    border: 15px solid rgba(255,255,255,.06);
+}
+
+.card span {
+    position: relative;
+    z-index: 2;
+
+    font-size: 14px;
+
+    color: rgba(255,255,255,.75);
+}
+
+.card h2 {
+    position: relative;
+    z-index: 2;
+
+    margin: 14px 0 0;
+
+    color: white;
+
+    font-size: 29px;
+}
+
+.balance {
+    background:
+        linear-gradient(
+            135deg,
+            #07518a,
+            #0d78c7
+        );
+}
+
+.income {
+    background:
+        linear-gradient(
+            135deg,
+            #08785c,
+            #12a875
+        );
+}
+
+.expense {
+    background:
+        linear-gradient(
+            135deg,
+            #963c4b,
+            #d65360
+        );
+}
+
+
+/* =========================================
+   GENERAL SECTIONS
+========================================= */
+
+.form-section,
+.chart-section,
+.transactions {
+    position: relative;
+
+    padding: 28px;
+
+    margin-bottom: 25px;
+
+    background: rgba(255,255,255,.08);
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    border-radius: 22px;
+
+    backdrop-filter: blur(18px);
+
+    box-shadow:
+        0 20px 50px rgba(0,0,0,.22);
+
+    overflow: hidden;
+}
+
+.form-section::before,
+.chart-section::before,
+.transactions::before {
+    content: "";
+
+    position: absolute;
+
+    width: 180px;
+    height: 180px;
+
+    right: -100px;
+    top: -100px;
+
+    border-radius: 50%;
+
+    background: rgba(33,150,243,.08);
+}
+
+.form-section h2,
+.chart-section h2,
+.transactions h2 {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 0;
+    margin-bottom: 20px;
+
+    color: white;
+
+    font-size: 21px;
+}
+
+
+/* =========================================
+   TRANSACTION FORM
+========================================= */
+
+#formTransaksi {
+    display: grid;
+
+    grid-template-columns: 2fr 1fr 1fr 1.2fr auto;
+
+    gap: 12px;
+
+    position: relative;
+    z-index: 2;
+}
+
+#formTransaksi input,
+#formTransaksi select,
+.filters select {
+    width: 100%;
+
+    padding: 13px 14px;
+
+    border: 1px solid rgba(150,200,230,.25);
+
+    border-radius: 12px;
+
+    outline: none;
+
+    background: rgba(255,255,255,.08);
+
+    color: white;
+
+    font-size: 14px;
+
+    transition: .25s;
+}
+
+#formTransaksi input::placeholder {
+    color: #8eafc4;
+}
+
+#formTransaksi select option,
+.filters select option {
+    background: #0b3150;
+    color: white;
+}
+
+#formTransaksi input:focus,
+#formTransaksi select:focus,
+.filters select:focus {
+    border-color: #38a9ff;
+
+    background: rgba(255,255,255,.12);
+
+    box-shadow:
+        0 0 0 3px rgba(33,150,243,.12);
+}
+
+#formTransaksi button {
+    padding: 13px 20px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #1688d8,
+            #36a9ff
+        );
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 8px 20px rgba(0,130,220,.25);
+
+    transition: .25s;
+}
+
+#formTransaksi button:hover {
+    transform: translateY(-3px);
+
+    box-shadow:
+        0 12px 28px rgba(0,150,240,.35);
+}
+
+
+/* =========================================
+   CHART
+========================================= */
+
+.chart-container {
+    position: relative;
+
+    width: 100%;
+
+    max-width: 650px;
+
+    height: 350px;
+
+    margin: 0 auto;
+
+    padding: 20px;
+
+    border-radius: 18px;
+
+    background: rgba(0,20,40,.22);
+
+    border: 1px solid rgba(255,255,255,.06);
+}
+
+
+/* =========================================
+   TRANSACTION HEADER
+========================================= */
+
+.transaction-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 15px;
+
+    position: relative;
+    z-index: 2;
+}
+
+.filters {
+    display: flex;
+
+    gap: 10px;
+}
+
+.filters select {
+    min-width: 150px;
+}
+
+
+/* =========================================
+   TRANSACTION LIST
+========================================= */
+
+#daftarTransaksi {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.empty {
+    text-align: center;
+
+    padding: 35px 20px;
+
+    color: #86a7bc;
+
+    background: rgba(255,255,255,.04);
+
+    border: 1px dashed rgba(255,255,255,.12);
+
+    border-radius: 14px;
+}
+
+
+/* =========================================
+   DELETE BUTTON
+========================================= */
+
+.delete-all {
+    position: relative;
+    z-index: 2;
+
+    margin-top: 20px;
+
+    padding: 12px 18px;
+
+    border: 1px solid rgba(255,100,100,.15);
+
+    border-radius: 11px;
+
+    background: rgba(220,60,60,.12);
+
+    color: #ff8585;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .25s;
+}
+
+.delete-all:hover {
+    background: rgba(220,60,60,.22);
+
+    transform: translateY(-2px);
+}
+
+
+/* =========================================
    LOGIN PAGE
-===================================================== */
+========================================= */
 
 body.login-page {
     min-height: 100vh;
 
     display: flex;
+
     justify-content: center;
     align-items: center;
 
-    position: relative;
-    overflow: hidden;
+    padding: 20px;
+
+    background:
+        radial-gradient(circle at 15% 20%, rgba(30,150,255,.20), transparent 25%),
+        radial-gradient(circle at 85% 80%, rgba(0,100,220,.20), transparent 25%),
+        linear-gradient(135deg, #031321, #082d4c, #0a4b73);
 }
 
-
-/* Login Card */
+body.login-page::before {
+    background-image:
+        linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
+}
 
 .login-box {
-    width: 390px;
-    padding: 38px 35px 32px;
+    width: 400px;
 
-    background: rgba(255, 255, 255, 0.97);
+    padding: 40px;
 
-    border-radius: 24px;
+    background: rgba(255,255,255,.95);
+
+    border: 1px solid rgba(255,255,255,.8);
+
+    border-radius: 26px;
 
     box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.4),
-        0 0 40px rgba(40, 150, 230, 0.12);
+        0 30px 70px rgba(0,0,0,.4);
 
     text-align: center;
 
     position: relative;
     z-index: 2;
-
-    animation: loginAppear 0.6s ease;
 }
-
-@keyframes loginAppear {
-    from {
-        opacity: 0;
-        transform: translateY(25px);
-    }
-
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-
-/* Login Icon */
 
 .login-icon {
-    width: 70px;
-    height: 70px;
+    width: 75px;
+    height: 75px;
 
-    margin: 0 auto 15px;
+    margin: 0 auto 18px;
 
     display: flex;
-    justify-content: center;
+
     align-items: center;
+    justify-content: center;
 
-    border-radius: 20px;
+    border-radius: 22px;
 
-    background: linear-gradient(
-        135deg,
-        #0b4f82,
-        #2186d4
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #07518a,
+            #2095e8
+        );
 
-    font-size: 36px;
+    font-size: 38px;
 
     box-shadow:
-        0 10px 25px rgba(20, 110, 180, 0.3);
+        0 12px 30px rgba(20,130,220,.3);
 }
 
-
-/* Login Title */
-
 .login-box h1 {
-    margin: 5px 0 8px;
+    margin: 0 0 8px;
 
     color: #092f50;
 
-    font-size: 29px;
+    font-size: 30px;
 }
-
-
-/* Login Subtitle */
 
 .login-box > p {
     color: #71879a;
 
     font-size: 14px;
-
-    margin: 0 0 24px;
 }
-
-
-/* Login Form */
 
 #loginForm {
     display: flex;
+
     flex-direction: column;
 
     gap: 12px;
+
+    margin-top: 25px;
 }
 
-
-/* Login Input */
-
 #loginForm input {
-    width: 100%;
-
     padding: 14px 16px;
 
     border: 2px solid #dce8f1;
@@ -156,61 +678,47 @@ body.login-page {
 
     background: #f7fafc;
 
-    color: #17324d;
-
     outline: none;
 
-    transition: 0.25s;
+    transition: .25s;
 }
 
 #loginForm input:focus {
-    border-color: #2186d4;
-
-    background: white;
+    border-color: #2095e8;
 
     box-shadow:
-        0 0 0 4px rgba(33, 134, 212, 0.12);
+        0 0 0 4px rgba(32,149,232,.12);
 }
 
-
-/* Login Button */
-
 #loginForm button {
-    width: 100%;
-
     padding: 14px;
 
     border: none;
 
     border-radius: 12px;
 
-    background: linear-gradient(
-        135deg,
-        #0b4f82,
-        #1976c9,
-        #238de0
-    );
+    background:
+        linear-gradient(
+            135deg,
+            #07518a,
+            #2095e8
+        );
 
     color: white;
-
-    font-size: 15px;
 
     font-weight: bold;
 
     cursor: pointer;
 
-    transition: 0.25s;
+    transition: .25s;
 }
 
 #loginForm button:hover {
     transform: translateY(-2px);
 
     box-shadow:
-        0 10px 25px rgba(25, 118, 201, 0.35);
+        0 10px 25px rgba(20,130,220,.3);
 }
-
-
-/* Demo Account */
 
 .demo-account {
     margin-top: 22px;
@@ -219,11 +727,7 @@ body.login-page {
 
     border-radius: 14px;
 
-    background: linear-gradient(
-        135deg,
-        #edf7ff,
-        #e2f1fc
-    );
+    background: #edf7ff;
 
     border: 1px solid #d5e9f8;
 
@@ -235,447 +739,17 @@ body.login-page {
 }
 
 .demo-account strong {
-    color: #0b4f82;
+    color: #07518a;
 
     font-size: 16px;
 }
 
 
-/* =====================================================
-   DASHBOARD
-===================================================== */
-
-body:not(.login-page) {
-    padding: 35px 20px;
-}
-
-
-/* Container */
-
-.container {
-    width: 100%;
-    max-width: 1100px;
-
-    margin: 0 auto;
-}
-
-
-/* =====================================================
-   TOPBAR
-===================================================== */
-
-.topbar {
-    display: flex;
-
-    justify-content: space-between;
-    align-items: center;
-
-    padding: 25px 30px;
-
-    margin-bottom: 25px;
-
-    background: rgba(255, 255, 255, 0.97);
-
-    border-radius: 20px;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.2);
-}
-
-
-/* Title */
-
-.topbar h1 {
-    margin: 0 0 7px;
-
-    color: #092f50;
-
-    font-size: 30px;
-}
-
-.topbar p {
-    margin: 0;
-
-    color: #6d8395;
-}
-
-
-/* Top buttons */
-
-.top-buttons {
-    display: flex;
-
-    gap: 10px;
-}
-
-
-/* Semua button atas */
-
-.top-buttons button {
-    border: none;
-
-    padding: 11px 15px;
-
-    border-radius: 10px;
-
-    cursor: pointer;
-
-    font-weight: bold;
-
-    transition: 0.2s;
-}
-
-
-/* Dark mode */
-
-#darkMode {
-    background: #e8f4fc;
-
-    color: #0b4f82;
-
-    font-size: 18px;
-}
-
-#darkMode:hover {
-    transform: scale(1.05);
-}
-
-
-/* Logout */
-
-.logout-btn {
-    background: #e74c3c;
-
-    color: white;
-}
-
-.logout-btn:hover {
-    background: #c0392b;
-
-    transform: translateY(-2px);
-}
-
-
-/* =====================================================
-   SUMMARY CARDS
-===================================================== */
-
-.summary {
-    display: grid;
-
-    grid-template-columns:
-        repeat(3, 1fr);
-
-    gap: 20px;
-
-    margin-bottom: 25px;
-}
-
-
-/* Card */
-
-.card {
-    position: relative;
-
-    padding: 25px;
-
-    border-radius: 18px;
-
-    color: white;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 12px 30px rgba(0, 0, 0, 0.2);
-
-    transition: 0.25s;
-}
-
-.card:hover {
-    transform: translateY(-5px);
-}
-
-
-/* Decorative circle */
-
-.card::after {
-    content: "";
-
-    position: absolute;
-
-    width: 120px;
-    height: 120px;
-
-    border-radius: 50%;
-
-    background: rgba(255, 255, 255, 0.1);
-
-    right: -35px;
-    bottom: -45px;
-}
-
-
-/* Card text */
-
-.card span {
-    font-size: 14px;
-
-    opacity: 0.85;
-}
-
-.card h2 {
-    margin: 10px 0 0;
-
-    font-size: 28px;
-}
-
-
-/* Balance */
-
-.balance {
-    background:
-        linear-gradient(
-            135deg,
-            #0b4f82,
-            #1976c9
-        );
-}
-
-
-/* Income */
-
-.income {
-    background:
-        linear-gradient(
-            135deg,
-            #087f5b,
-            #20a66a
-        );
-}
-
-
-/* Expense */
-
-.expense {
-    background:
-        linear-gradient(
-            135deg,
-            #a83232,
-            #e05252
-        );
-}
-
-
-/* =====================================================
-   SECTIONS
-===================================================== */
-
-.form-section,
-.chart-section,
-.transactions {
-    background: rgba(255, 255, 255, 0.97);
-
-    border-radius: 20px;
-
-    padding: 28px;
-
-    margin-bottom: 25px;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.18);
-}
-
-
-.form-section h2,
-.chart-section h2,
-.transactions h2 {
-    margin-top: 0;
-
-    color: #0b3154;
-}
-
-
-/* =====================================================
-   FORM TRANSAKSI
-===================================================== */
-
-#formTransaksi {
-    display: grid;
-
-    grid-template-columns:
-        2fr 1fr 1fr 1.2fr auto;
-
-    gap: 10px;
-}
-
-
-#formTransaksi input,
-#formTransaksi select,
-.filters select {
-    padding: 13px;
-
-    border: 2px solid #dce8f1;
-
-    border-radius: 10px;
-
-    background: #f7fafc;
-
-    color: #17324d;
-
-    outline: none;
-
-    transition: 0.2s;
-}
-
-
-#formTransaksi input:focus,
-#formTransaksi select:focus,
-.filters select:focus {
-    border-color: #2186d4;
-
-    background: white;
-
-    box-shadow:
-        0 0 0 3px rgba(33, 134, 212, 0.1);
-}
-
-
-/* Add Button */
-
-#formTransaksi button {
-    padding: 13px 18px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background:
-        linear-gradient(
-            135deg,
-            #0b4f82,
-            #1976c9
-        );
-
-    color: white;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-#formTransaksi button:hover {
-    transform: translateY(-2px);
-
-    box-shadow:
-        0 8px 20px rgba(25, 118, 201, 0.3);
-}
-
-
-/* =====================================================
-   CHART
-===================================================== */
-
-.chart-container {
-    width: 100%;
-
-    max-width: 600px;
-
-    height: 350px;
-
-    margin: 10px auto 0;
-}
-
-
-/* =====================================================
-   TRANSACTION HEADER
-===================================================== */
-
-.transaction-header {
-    display: flex;
-
-    justify-content: space-between;
-
-    align-items: center;
-
-    gap: 15px;
-
-    margin-bottom: 20px;
-}
-
-
-.filters {
-    display: flex;
-
-    gap: 10px;
-}
-
-
-/* =====================================================
-   TRANSACTION LIST
-===================================================== */
-
-#daftarTransaksi {
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 10px;
-}
-
-
-/* Empty */
-
-.empty {
-    text-align: center;
-
-    padding: 30px;
-
-    color: #8193a3;
-
-    background: #f5f9fc;
-
-    border-radius: 12px;
-}
-
-
-/* =====================================================
-   DELETE ALL
-===================================================== */
-
-.delete-all {
-    margin-top: 20px;
-
-    padding: 12px 18px;
-
-    border: none;
-
-    border-radius: 10px;
-
-    background: #ffe9e7;
-
-    color: #c0392b;
-
-    font-weight: bold;
-
-    cursor: pointer;
-
-    transition: 0.2s;
-}
-
-.delete-all:hover {
-    background: #ffd5d1;
-
-    transform: translateY(-2px);
-}
-
-
-/* =====================================================
-   RESPONSIVE - TABLET
-===================================================== */
-
-@media (max-width: 850px) {
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (max-width: 900px) {
 
     .summary {
         grid-template-columns: 1fr;
@@ -688,27 +762,16 @@ body:not(.login-page) {
     #formTransaksi button {
         grid-column: span 2;
     }
-
 }
 
 
-/* =====================================================
-   RESPONSIVE - HP
-===================================================== */
-
 @media (max-width: 600px) {
 
-    body:not(.login-page) {
-        padding: 15px 10px;
+    .container {
+        width: calc(100% - 20px);
+
+        padding-top: 15px;
     }
-
-
-    .login-box {
-        width: calc(100% - 30px);
-
-        padding: 30px 22px;
-    }
-
 
     .topbar {
         flex-direction: column;
@@ -720,26 +783,17 @@ body:not(.login-page) {
         padding: 22px;
     }
 
+    .topbar h1 {
+        font-size: 25px;
+    }
 
     .top-buttons {
         width: 100%;
     }
 
-
     .top-buttons button {
         flex: 1;
     }
-
-
-    .summary {
-        grid-template-columns: 1fr;
-    }
-
-
-    .card h2 {
-        font-size: 24px;
-    }
-
 
     .form-section,
     .chart-section,
@@ -747,16 +801,13 @@ body:not(.login-page) {
         padding: 20px 16px;
     }
 
-
     #formTransaksi {
         grid-template-columns: 1fr;
     }
 
-
     #formTransaksi button {
         grid-column: auto;
     }
-
 
     .transaction-header {
         flex-direction: column;
@@ -764,14 +815,23 @@ body:not(.login-page) {
         align-items: stretch;
     }
 
-
     .filters {
         flex-direction: column;
     }
 
+    .filters select {
+        width: 100%;
+    }
 
     .chart-container {
         height: 280px;
+
+        padding: 10px;
     }
 
+    .login-box {
+        width: 100%;
+
+        padding: 32px 22px;
+    }
 }
