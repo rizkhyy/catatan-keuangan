@@ -8,7 +8,7 @@ loginForm.addEventListener("submit", function(event) {
     const username = document.getElementById("username").value;
     const password = document.getElementById("password").value;
 
-    if (username === "iky" && password === "147253") {
+    if (username === "iky" && password === "123456789") {
 
         localStorage.setItem("isLogin", "true");
 
